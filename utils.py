@@ -21,10 +21,10 @@ def sort_movies_by_attr(movies_dict, attr, desc=True):
     attr_dict = build_movie_attr_dict(movies_dict, attr)
     return {k: v for k, v in sorted(attr_dict.items(), key=lambda item: item[1], reverse=desc)}
 
-def mount_movies_dict(aux_df):
+def mount_movies_dict(df):
     movies_dict = dict()
 
-    for i, row in aux_df.iterrows():
+    for i, row in df.iterrows():
         id_movie = row['id']
         inner_dict = dict(
             title=row['original_title'],
@@ -41,6 +41,15 @@ def mount_movies_dict(aux_df):
     
     return movies_dict
 
-
-
-
+def mount_genres_count_dict(movies_dict):
+    genres_dict = build_movie_attr_dict(movies_dict, 'genres')
+    genres_count_dict = dict()
+    for movie, genres in genres_dict.items():
+        for genre in genres:
+            genre = genre[1:]
+            if genre in genres_count_dict:
+                genres_count_dict[genre] += 1
+            else:
+                genres_count_dict[genre] = 1
+    genres_count_dict = {k: v for k, v in sorted(genres_count_dict.items(), key=lambda item: item[1], reverse=True)}
+    return genres_count_dict
