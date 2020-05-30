@@ -51,7 +51,29 @@ def mount_movies_dict(df):
             genres=get_genres_from_row(row['genres']),
             runtime=float(row['runtime']),
             popularity=float(row['popularity']),
-            profit=float(row['revenue'])-float(row['budget'])
+            profit=float(row['revenue'])-float(row['budget']),
+            release_data=row['release_date']
+        )   
+        movies_dict[id_movie] = inner_dict
+    
+    return movies_dict
+
+def mount_new_movies_dict(df):
+    movies_dict = dict()
+
+    for i, row in df.iterrows():
+        id_movie = row['id']
+        inner_dict = dict(
+            title=row['original_title'],
+            budget=float(row['budget']),
+            vote_count=float(row['vote_count']),
+            vote_avg=float(row['vote_average']),
+            revenue=float(row['revenue']),
+            genres=row['genres'],
+            runtime=float(row['runtime']),
+            popularity=float(row['popularity']),
+            profit=float(row['revenue'])-float(row['budget']),
+            release_data=row['release_date']
         )   
         movies_dict[id_movie] = inner_dict
     
